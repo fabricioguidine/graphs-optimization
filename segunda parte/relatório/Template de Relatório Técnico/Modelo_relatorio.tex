@@ -1,0 +1,259 @@
+\documentclass[12pt,fleqn]{article}
+%\usepackage {psfig,epsfig} % para incluir figuras em PostScript
+\usepackage{amsfonts,amsthm,amsopn,amssymb,latexsym}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[intlimits]{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[linesnumbered,algoruled,boxed,lined]{algorithm2e}
+
+%alguns macros
+% \newcommand{\R}{\ensuremath{\mathbb{R}}}
+% \newcommand{\Rn}{{\ensuremath{\mathbb{R}}}^{n}}
+% \newcommand{\Rm}{{\ensuremath{\mathbb{R}}}^{m}}
+% \newcommand{\Rmn}{{\ensuremath{\mathbb{R}}}^{{m}\times{n}}}
+% \newcommand{\contcaption}[1]{\vspace*{-0.6\baselineskip}\begin{center}#1\end{center}\vspace*{-0.6\baselineskip}}
+%=======================================================================
+% Dimensões da página
+\usepackage{a4}                       % tamanho da página
+\setlength{\textwidth}{16.0cm}        % largura do texto
+\setlength{\textheight}{9.0in}        % tamanho do texto (sem head, etc)
+\renewcommand{\baselinestretch}{1.15} % espaçamento entre linhas
+\addtolength{\topmargin}{-1cm}        % espaço entre o head e a margem
+\setlength{\oddsidemargin}{-0.1cm}    % espaço entre o texto e a margem
+       
+% Ser indulgente no preenchimento das linhas
+\sloppy
+ 
+
+\begin{document}
+
+
+\pagestyle {empty}
+
+% P�ginas iniciais
+\include {capa}           % capa ilustrativa
+
+
+
+\pagestyle {empty}
+%\abstract{ Descreva aqui o resumo do objeto de estudo do seu trabalho.}
+
+\newpage
+
+%\tableofcontents
+
+
+% Numeração em romanos para páginas iniciais (sumários, listas, etc)
+%\pagenumbering {roman}
+\pagestyle {plain}
+
+
+
+\setcounter{page}{0} \pagenumbering{arabic}
+ 
+\setlength{\parindent}{0in}  %espaco entre paragrafo e margem 
+% Espaçamento entre parágrafos
+\parskip 5pt  
+
+\section{Introdução}
+
+%Aqui, você deve descrever o objetivo do trabalho em linhas gerais, destacando o contexto do mesmo, os algoritmos etc
+O presente Relatório Técnico tem como objetivo central descrever o uso de algoritmos construtivos gulosos para o Problema Kgsdspaidh of Waljasda. Considerou-se neste trabalho as características do problema modelado sobre um grafo .... Foram desenvolvidos três algoritmos gulosos e randomizados. Os mesmos foram avaliados sobre um conjunto de instâncias e os resultados foram comparados com os apresentados em \cite{moradi2015semi}.
+
+Note que nesta seção você deve dar uma visão geral do que consiste o trabalho, podendo destacar o contexto do mesmo no escopo da disciplina de Grafos, os objetivos e a motivação para o desenvolvimento do mesmo. O último parágrafo segue mais ou menos o modelo abaixo:
+
+O restante do trabalho está assim estruturado: na Seção \ref{secProblema} o problema é descrito formalmente através de um modelo em grafos; a Seção \ref{secAlgoritmos} descreve as abordagens propostas para o problema, enquanto a Seção \ref{secResultados} apresenta os experimentos computacionais, onde se descreve o design dos experimentos, o conjunto de instâncias (\textit{benchmarks}), bem como se apresenta a análise comparativa dos resultados dos algoritmos desenvolvidos e a literatura; por fim, a Seção \ref{secConclusoes} traz as conclusões do trabalho e propostas de trabalhos futuros.
+
+\section{Descrição do problema}
+\label{secProblema}
+ 
+ Nesta seção você deve descrever formalmente o problema modelado em grafos. Caso sejam usadas equações para isso, seguem alguns exemplos:
+
+$\dots$ o problema  pode ser formulado por:
+
+Função objetivo:
+\begin{eqnarray}
+min ~Z ~= \sum_{j=1}^{T} \sum_{i=1}^{H} C(Pot_{ij})\times x_{ij}   & & \label{func_obj}
+\end{eqnarray}
+Onde o custo de produção é dado por:
+\begin{eqnarray}
+C(Pot_{ij}) = a\times (Pot_{ij})^2+b\times Pot_{ij}+c
+\end{eqnarray}
+
+sujeito a:
+
+\begin{eqnarray}
+%Os limites de geração para a usina
+x_{ij} \times p_{i}  \leq ~~Pot_{ij} ~~\leq ~~ x_{ij} ~~\times ~~P_{i} ~~,  ~~\forall  i \in V=\{1,...,H\},~~\forall ~~ j\in W=\{1,...,T\} \label{restr_3}
+\end{eqnarray}
+\begin{eqnarray}
+%Balanço de energia produzida
+\sum_{j=1}^{T} \sum_{i=1}^{H} (Pot_{ij}\times x_{ij}) - D_{j} = 0 , ~~ \forall  i\in V=\{1,...,H\},~~\forall  j\in W=\{1,...,T\}  \label{restr_4}
+\end{eqnarray}
+%Exigência de reserva do sistema
+\begin{eqnarray}
+\sum_{j=1}^{T} \sum_{i=1}^{H} (P_{ij}\times x_{ij}) \geq D_{j}+V_{j} ,  ~~\forall ~~ i\in V=\{1,...,H\},~~\forall ~~ j\in W=\{1,...,T\}  \label{restr_5}
+\end{eqnarray}
+
+
+A função objetivo (\ref{func_obj})   minimiza o custo total da geração de energia.  As restrições (\ref{restr_3}) se referem aos limites de geração da usina e limitarão qual o mínimo e o máximo que cada usina geradora $i$ pode alcançar.As restrições (\ref{restr_4}) garantem o balanceamento de energia produzida, pela qual a usina irá gerar energia de acordo com a demanda da mesma. As restrições (\ref{restr_5}) satisfazem as exigências de reserva do sistema, visando o armazenamento necessário para cada período. 
+
+\textbf{Observação:} estas equações são apenas um exemplo. Você não precisa descrever o problema na forma de Programação Matemática, \textbf{mas é essencial que o problema seja descito formalmente na modelagem de grafos.}
+
+\section{Abordagens gulosas para o problema}
+\label{secAlgoritmos}
+Nesta seção são descritos os algoritmos desenvolvidos. Aqui, deve-se justificar a escolha da função critério utilizada e a estratégia de atualização da lista de candidatos.
+
+\subsection{Algoritmo guloso}
+\label{subSecAlgGulo}
+
+Descrever o algoritmo guloso, colocando também o pseudocódigo. Vide exemplo no Algoritmo \ref{algExemplo}.
+
+
+\subsection{Algoritmo guloso randomizado}
+\label{subSecAlgRand}
+
+Descrever o algoritmo guloso randomizado, justificar a proposta do mesmo sobre as limitações da abordagem gulosa descrita na seção anterior e colocar também o pseudocódigo.
+
+
+\subsection{Algoritmo guloso randomizado reativo}
+\label{subSecAlgRandReact}
+Descrever o algoritmo guloso randomizado reativo, justificar a proposta do mesmo sobre as limitações da abordagem gulosa randomizada descrita na seção anterior e colocar também o pseudocódigo.
+
+\begin{algorithm}[!htb]
+  \SetAlgoLined
+  \KwIn{$maxItera, vetAlfas, tamBloco$}
+  \KwOut{\textit{Best Solution}}    
+  \caption{Algoritmo Exemplo}\label{alg.PPA}
+  \label{algExemplo}
+  Generate a set $P$ of initial solutions; \\
+  
+  \For {$j\gets 1$ \KwTo MaxGen}{
+      Calculate the survival value SV($p$) for each solution $p \in P[1..m]$; \\
+      $BestPrey \gets$ Best solution of $P$; \\ %// Best solution of current population \\
+      $Predator \gets$ Worst solution of $P$; \\
+      Preys $\gets P \backslash$ ($BestPrey \cup Predator$); \\
+      
+      \ForEach{ $p' \in$ Preys}{
+        \uIf{$rand \leq \text{follow-up probability}$}
+                { Follow-Move($p'$); }
+            \Else{ Run-Move($p'$); }
+       }
+      Move-Predator($Predator$); \\
+      Local-Search($BestPrey$); \\
+    }
+    \KwRet{$BestPrey$}; \\
+\end{algorithm}
+
+
+\section{Experimentos computacionais}
+\label{secResultados}
+Nesta seção você deve descrever todo o experimento computacional. Para tanto, defina subseções para:
+
+\subsection{Descrição das instâncias}
+\label{subSecInstancias}
+Descreva as instâncias citando a referência onde as mesmas foram obtidas, se você testou apenas um subconjunto de instâncias da referência, explique qual(is) o(s) critério(s) utilizado(s) para a seleção do conjunto de instâncias usadas. Você pode listar as instâncias em uma tabela como no exemplo da Tabela \ref{tabInstancias}.
+\begin{table}[!h]
+\centering
+\begin{tabular}{l|l|r|r|r}
+\hline
+\multicolumn{1}{c|}{\textbf{Instance Name}} & \multicolumn{1}{c|}{\textbf{\#edge}} & \multicolumn{1}{c|}{\textbf{\#vertex}} & \multicolumn{1}{c|}{\textbf{\#$K$}} & \multicolumn{1}{c}{\textbf{\#$L$}}  \\ \hline
+st323\_70a & 323 & 70 & 14 & 9   \\ \hline
+proB789\_100a & 789 & 100 & 20 & 10  \\ \hline
+lin884\_318 & 884 & 118 & 64 & 10   \\ \hline \hline
+pcb2208\_442 & 2.208  & 442 & 89 & 10  \\ \hline
+pr5314 & 5.314 & 439 & 88 & 10  \\ \hline
+wath4180 & 4.180 & 699 & 20 & 25\\ \hline
+lin41817\_710 & 41.817 & 710 & 21 & 25  \\ \hline \hline
+kro121002 & 121.002 & 1.000 & 120 & 25  \\ \hline
+dilc & 91.217 & 2.620 & 153 & 250  \\ \hline
+pro789\_100a & 117.890 & 3.200 & 200 & 107  \\ \hline
+\end{tabular}
+\caption{Exemplo de tabela com descrição das instâncias}
+\label{tabInstancias}
+\end{table}
+
+
+\subsection{Ambiente computacional do experimento e conjunto de parâmetros}
+\label{subSecAmbiente}
+Descreva o ambiente computacional utilizado citando a linguagem de programação, o compilador utilizado, o processador da máquina utilizada nos testes, o gerador de números aleatórios etc.
+
+Descreva o conjunto de parâmetros usado (número de iterações, valores de $\alpha$ utilizados nos testes com o algoritmo guloso randomizado, a faixa de valores de $\alpha$ e o tamanho do bloco de atualização das probabilidades adotados no algoritmo guloso randomizado reativo etc. 
+
+\subsection{Resultados quanto à qualidade e tempo}
+\label{subSecResultados}
+Apresente aqui os resultados quanto à qualidade (valor da função de otimização). Explique o significado das colunas da tabela. Lembre-se de por em negrito os valores associados aos melhores resultados para cada instância. A tabela \ref{tabResultExemplo} é um exemplo de apresentação dos resultados.
+
+Assim, as heurísticas de construção foram executadas para cada instância em duas diferentes formas: gulosas e gulosas randomizadas reativas. A Tabela \ref{tabResultExemplo} exibe os resultados gerados pelos algoritmos de construção guloso (colunas 3 e 4), o guloso randomizado reativo (colunas 5 e 6) em comparação com as soluções produzidas pelo algoritmo SCIFI (colunas 7 e 8) para as instâncias. Os valores destacados em negrito indicam os melhores resultados.
+
+Com o objetivo de realizar os testes comparativos, foi utilizado um conjunto de 30 instâncias, sendo as 9 primeiras consideradas pequenas (10 APs e 50 clientes); as instâncias de 10 a 21 consideradas médias (40 APs e 200 clientes); e as 9 últimas, numeradas de 22 a 30, consideradas grandes (70 APs e 350 clientes).
+
+Nos resultados apresentados na Tabela \ref{tabResultExemplo}, a primeira coluna indica o número da instância utilizada, a segunda coluna mostra o valor da melhor média das soluções encontrada dentre todas as execuções realizadas para os diferentes algoritmos apresentados.
+
+As demais colunas da tabela fornecem detalhadamente as métricas resultantes das execuções de cada abordagem, como o desvio relativo da média das soluções do algoritmo com relação à melhor média para a instância (coluna 2), e o tempo médio de execução, dado em segundos.
+
+A princípio, a diferença percentual média (\textit{gap}) das soluções poderia ser calculada conforme a Equação \ref{eq:gap} descrita a seguir, onde $Media(a)$ é o valor médio das soluções obtidas pelo algoritmo $a$ e $b$ é o valor da melhor média obtida dentre todos os algoritmos comparados (\textit{best}):
+
+\begin{equation}
+    gap(a) = \frac{Media(a) - b}{b} \times 100
+    \label{eq:gap}
+\end{equation}
+
+No entanto, casos em que $b = 0$, ou seja, a melhor solução encontrada possui custo igual a 0, o cálculo do \textit{gap} realiza uma divisão por zero causando um erro matemático. Para resolver esse problema, \cite{vallada2008minimising} propõem o uso da métrica denominada Índice de Desvio Relativo (RDI, do inglês \textit{Relative Deviation Index}), cujo cálculo é apresentado pela Equação \ref{eq:rdi} e define a qualidade da  solução de uma dado algoritmo $a$:
+\begin{equation}
+    RDI(a) = \frac{Media(a) - b}{c - b} \times 100
+    \label{eq:rdi}
+\end{equation}
+
+onde $c$ é o valor da pior solução dentre os algoritmos utilizados, e nesse caso específico, a pior média encontrada. Note que $RDI(a) \in [0,100]$ e quanto menor o valor resultante, maior é a qualidade da solução do algoritmo $a$.
+
+\begin{table}[htb]
+\centering
+\label{tabResultExemplo}
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+\multirow{{\bf Instância}} & \multicolumn{1}{c|}{\multirow{{\bf Melhor}}} & \multicolumn{2}{c|}{{\bf Guloso}}   & \multicolumn{2}{c|}{{\bf Reativo}}  & \multicolumn{2}{c}{{\bf SCIFI}}  \\ \cline{3-8}   & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{{\bf \textit{RDI}}} & \multicolumn{1}{c|}{{\bf Tempo}} & \multicolumn{1}{c|}{{\bf \textit{RDI}}} & \multicolumn{1}{c|}{{\bf Tempo}} & \multicolumn{1}{c|}{{\bf \textit{RDI}}} & \multicolumn{1}{c}{{\bf Tempo}} \\ \hline
+
+st323\_70a    & 0,0   & {\bf 0,00}    & 0,282   & {\bf 0,00}   & 0,141   & {\bf 0,00}     & \textbf{0,114}  \\ \hline
+proB789\_100a    & 0,0   & {\bf 0,00}    & 0,129   & {\bf 0,00}   & 0,140   & {\bf 0,00}     & \textbf{0,128}  \\ \hline
+lin884\_318    & 0,0   & {\bf 0,00}    & \textbf{0,112}   & {\bf 0,00}   & 0,131   & 100,00         & 0,128  \\ \hline
+pcb2208\_442    & 88,3  & 58,89         & 0,115   & {\bf 0,00}   & \textbf{0,089}   & 100,00          & 0,112   \\ \hline
+pr5314    & 103,0 & 57,45         & 0,111   & {\bf 0,00}   & \textbf{0,092}   & 100,00          & 0,144   \\ \hline
+wath4180    & 42,7  & 49,23         & 0,111   & {\bf 0,00}   & \textbf{0,087}  & 100,00         & 0,112   \\ \hline
+lin41817\_710    & 0,0   & {\bf 0,00}    & \textbf{0,098}   & {\bf 0,00}   & 0,115   & {\bf 0,00}     & 0,159    \\ \hline
+kro121002    & 82,0  & 93,48        & \textbf{0,114}   & {\bf 0,00}   & 0,115   & 100,00         & 0,159    \\ \hline
+dilc    & 49,1  & 24,05          & 0,124   & {\bf 0,00}   & \textbf{0,104}   & 100,00          & 0,127   \\ \hline
+pro789\_100a  & 222,4  & 18,26         & 0,150   & {\bf 0,00}   & 0,202   & 100,00         & \textbf{0,127}   \\ \hline
+\end{tabular}
+\caption{Exemplo de tabela com comparação de resultados dos algoritmos de construção com o algoritmo da literatura SCIFI}
+\end{table}
+
+Segue um exemplo superficial de análise de resultados a partir de uma tabela:
+
+de Analisando a Tabela \ref{tabResultExemplo} é possível verificar que os resultados quanto à qualidade da solução apresentados pelo algoritmo proposto em sua fase de construção são melhores que aqueles obtidos pelo algoritmo SCIFI. Isto vem a confirmar a hipótese de que o processo de \textit{clusterização} realizado pelo algoritmo através da identificação das componentes conexas do grafo, de fato, impacta na qualidade da alocação de canais com menor interferência.
+
+
+\textbf{Nota}: Nesta seção você precisa descrever os resultados, não apenas apresentar as tabelas. Procure destacar quais os melhores algoritmos, destacar se há alguma característica de uma ou mais instâncias (tamanho da instância, densidade de arestas ou grupo de instância específico) que esteja influenciando o comportamento de um ou outro algoritmo etc. 
+
+
+\section{Conclusões e trabalhos futuros}
+\label{secConclusoes}
+
+Apresente aqui as conclusões do trabalho. Comece descrevendo um resumo sucinto do que consistiu o trabalho, o problema modelado em grafos, o que foi implementado. Noutro parágrafo, descreva as conclusões e propostas de melhoria dos resultados a partir de novas abordagens.
+
+%Apresente as conclus\~oes do trabalho e faça indicações de trabalhos futuros.
+
+
+
+%Incluindo referências bibliográficas
+\bibliographystyle{plain} %define o estilo    
+\bibliography{bibliografia} %busca o arquivo
+
+%inserindo anexos
+\appendix
+
+
+
+\end{document} %finaliza o documento
