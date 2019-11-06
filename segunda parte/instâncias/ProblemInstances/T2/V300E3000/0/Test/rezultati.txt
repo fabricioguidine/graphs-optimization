@@ -1,0 +1,11 @@
+VisulisationInfo
+Number Of Nodes:300   Number Of Edges:299
+Name:0   Corection:False   MinMax:Basic   Rank:False
+2707
+4418
+correction Average: 0
+correction Standard deviation: NaN
+correction Best: 1.79769313486232E+308  Index:-1  Iteration:-1
+nocorrection Average: 2707
+nocorrection Best: 2707  Index:0  Iteration:4418
+nocorrection Standard deviation: 0
