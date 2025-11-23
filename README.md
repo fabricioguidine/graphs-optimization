@@ -113,7 +113,7 @@ The report includes:
 mkdir build
 cd build
 
-# Configure and build
+# Configure and build (CMakeLists.txt is in cmake/ directory)
 cmake ..
 cmake --build .
 
@@ -122,6 +122,20 @@ ctest
 # Or directly:
 ./graph_tests
 ```
+
+### Data Setup
+
+Before running the algorithms, set up test data:
+
+```bash
+# Run the data setup script
+python scripts/setup_data.py
+```
+
+This will:
+- Create necessary data directories
+- Check for existing graph instances
+- Generate sample test graphs if needed
 
 ### Running the Application
 
