@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![C++ Standard](https://img.shields.io/badge/C++-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
 
-## Overview
+## Description
 
 A comprehensive C++ implementation of graph algorithms including fundamental graph operations, shortest path algorithms, minimum spanning tree algorithms, and metaheuristic optimization using GRASP (Greedy Randomized Adaptive Search Procedure).
 
@@ -27,146 +27,33 @@ A comprehensive C++ implementation of graph algorithms including fundamental gra
 ### Metaheuristics
 - **GRASP**: Greedy Randomized Adaptive Search Procedure for optimization problems
 
-## Project Structure
-
-```
-graphs-with-grasp/
-├── include/                 # Header files
-│   ├── Graph.h              # Main graph class
-│   ├── Node.h               # Node (vertex) class
-│   ├── Edge.h               # Edge class
-│   ├── algorithms/          # Algorithm implementations
-│   │   ├── Dijkstra.h
-│   │   ├── FloydWarshall.h
-│   │   ├── Prim.h
-│   │   ├── Kruskal.h
-│   │   ├── StronglyConnectedComponents.h
-│   │   ├── TopologicalSort.h
-│   │   └── GRASP.h
-│   └── utils/               # Utility functions
-│       └── GraphReader.h
-├── src/                     # Source files
-│   ├── core/                # Core data structures
-│   ├── algorithms/          # Algorithm implementations
-│   └── utils/               # Utility implementations
-├── tests/                   # Unit tests
-│   ├── test_Graph.cpp
-│   └── test_Algorithms.cpp
-├── docs/                    # Documentation
-│   ├── requirements.pdf     # Project specification
-│   ├── latex/               # LaTeX technical report
-│   └── examples/            # Reference code examples
-├── scripts/                 # Utility scripts
-│   ├── setup_data.py        # Data setup script
-│   └── README.md
-├── data/                    # Graph instances
-│   └── instances/
-├── CMakeLists.txt           # Build configuration (root - IDE compatible)
-├── .clang-format            # Code formatting configuration
-├── .clang-tidy              # Static analysis configuration
-├── .vscode/                 # VS Code configuration (optional)
-└── README.md               # This file
-│       ├── report.tex       # Main LaTeX document
-│       ├── cover.tex        # Cover page
-│       ├── references.bib   # Bibliography
-│       └── README.md        # Compilation instructions
-├── CMakeLists.txt           # Build configuration
-└── README.md               # This file
-```
-
-## 📚 Documentation
-
-### Requirements
-
-The complete project requirements are available in:
-
-* **PDF**: `docs/requirements.pdf`
-
-### Technical Report
-
-A comprehensive technical report in LaTeX (following UFJF standards) is located in `docs/latex/`:
-
-* **Main document**: `docs/latex/report.tex`
-* **Cover page**: `docs/latex/cover.tex`
-* **Bibliography**: `docs/latex/references.bib`
-* **Compilation instructions**: `docs/latex/README.md`
-
-**To compile the PDF report:**
-
-```bash
-cd docs/latex
-pdflatex report.tex
-bibtex report
-pdflatex report.tex
-pdflatex report.tex
-```
-
-**Recommended:** Use [Overleaf](https://www.overleaf.com/) (online LaTeX editor - no installation needed)
-
-**Report:**
-- **LaTeX Source**: [`docs/latex/report.tex`](docs/latex/report.tex)
-- **Cover Page**: [`docs/latex/cover.tex`](docs/latex/cover.tex)
-- **Bibliography**: [`docs/latex/references.bib`](docs/latex/references.bib)
-
-The report includes:
-- Introduction
-- Implementation details
-- Algorithm descriptions
-- Complexity analysis
-- Results and conclusions
-
-## Building the Project
+## Getting Started
 
 ### Prerequisites
+
 - CMake 3.10 or higher
 - C++17 compatible compiler (GCC, Clang, or MSVC)
 - Git (for fetching Google Test)
 
-### Build Instructions
+### Installation
 
-#### Using CMake (Command Line)
-
+1. Clone the repository:
 ```bash
-# Create build directory
-mkdir build
-cd build
-
-# Configure and build
-cmake ..
-cmake --build .
-
-# Run tests
-ctest
-# Or directly:
-./bin/graph_tests
+git clone https://github.com/fabricioguidine/graphs-with-grasp.git
+cd graphs-with-grasp
 ```
 
-#### Using IDE
+2. Create build directory:
+```bash
+mkdir build
+cd build
+```
 
-**CLion:**
-1. Open the project folder in CLion
-2. CLion will automatically detect `CMakeLists.txt` at the root
-3. Build: `Build > Build Project` or `Ctrl+F9`
-4. Run: `Run > Run 'graph_algorithms'` or `Shift+F10`
-
-**Visual Studio Code:**
-1. Open the project folder
-2. Install extensions: C/C++, CMake Tools
-3. Press `Ctrl+Shift+P` and select "CMake: Configure"
-4. Build: `Ctrl+Shift+P` → "CMake: Build"
-5. Run: Use the debugger (F5) or run from terminal
-
-**Visual Studio (Windows):**
-1. Open Visual Studio
-2. File → Open → CMake → Select `CMakeLists.txt`
-3. Build: `Build > Build Solution` or `Ctrl+Shift+B`
-4. Run: `Debug > Start Debugging` or `F5`
-
-**Qt Creator:**
-1. File → Open File or Project → Select `CMakeLists.txt`
-2. Configure the project
-3. Build: `Build > Build Project` or `Ctrl+B`
-4. Run: `Build > Run` or `Ctrl+R`
+3. Configure and build:
+```bash
+cmake ..
+cmake --build .
+```
 
 ### Data Setup
 
@@ -181,6 +68,8 @@ This will:
 - Create necessary data directories
 - Check for existing graph instances
 - Generate sample test graphs if needed
+
+## Usage
 
 ### Running the Application
 
@@ -200,7 +89,7 @@ This will:
 ./graph_algorithms input.txt output.txt 0 1 0
 ```
 
-## Input File Format
+### Input File Format
 
 The input file should follow this format:
 
@@ -219,9 +108,9 @@ For weighted graphs, include edge weights:
 ...
 ```
 
-## Usage Examples
+### Code Examples
 
-### Example 1: Find Shortest Path
+#### Example 1: Find Shortest Path
 ```cpp
 #include "Graph.h"
 #include "algorithms/Dijkstra.h"
@@ -233,7 +122,7 @@ graph->insertEdge(2, 3, 2.0f);
 std::vector<float> distances = Dijkstra::shortestPath(graph, 1);
 ```
 
-### Example 2: Minimum Spanning Tree
+#### Example 2: Minimum Spanning Tree
 ```cpp
 #include "Graph.h"
 #include "algorithms/Prim.h"
@@ -245,7 +134,7 @@ std::vector<std::pair<int, int>> mst = Prim::minimumSpanningTree(graph);
 float weight = Prim::getMSTWeight(graph);
 ```
 
-### Example 3: Topological Sort
+#### Example 3: Topological Sort
 ```cpp
 #include "Graph.h"
 #include "algorithms/TopologicalSort.h"
@@ -267,6 +156,55 @@ The project includes comprehensive unit tests using Google Test framework:
 # Run specific test
 ./graph_tests --gtest_filter=GraphTest.*
 ```
+
+## Project Structure
+
+```
+graphs-with-grasp/
+├── include/                 # Header files
+│   ├── Graph.h              # Main graph class
+│   ├── Node.h               # Node (vertex) class
+│   ├── Edge.h               # Edge class
+│   ├── algorithms/          # Algorithm implementations
+│   └── utils/               # Utility functions
+├── src/                     # Source files
+│   ├── core/                # Core data structures
+│   ├── algorithms/          # Algorithm implementations
+│   └── utils/               # Utility implementations
+├── tests/                   # Unit tests
+├── docs/                    # Documentation
+│   ├── requirements.pdf     # Project specification
+│   └── latex/               # LaTeX technical report
+├── scripts/                 # Utility scripts
+├── data/                    # Graph instances
+└── CMakeLists.txt           # Build configuration
+```
+
+## Documentation
+
+### Technical Report
+
+A comprehensive technical report in LaTeX (following UFJF standards) is located in `docs/latex/`:
+
+- **LaTeX Source**: [`docs/latex/report.tex`](docs/latex/report.tex)
+- **Cover Page**: [`docs/latex/cover.tex`](docs/latex/cover.tex)
+- **Bibliography**: [`docs/latex/references.bib`](docs/latex/references.bib)
+
+**To compile the PDF report:**
+
+```bash
+cd docs/latex
+pdflatex report.tex
+bibtex report
+pdflatex report.tex
+pdflatex report.tex
+```
+
+**Recommended:** Use [Overleaf](https://www.overleaf.com/) (online LaTeX editor - no installation needed)
+
+### Requirements
+
+The complete project requirements are available in: [`docs/requirements.pdf`](docs/requirements.pdf)
 
 ## Algorithm Complexity
 
@@ -291,6 +229,7 @@ Where:
 ## Contributing
 
 Contributions are welcome! Please follow these guidelines:
+
 1. Maintain code style consistency
 2. Add unit tests for new features
 3. Update documentation as needed
@@ -300,7 +239,12 @@ Contributions are welcome! Please follow these guidelines:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## References
+## Authors
 
-- Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms*
-- Resende, M. G., & Ribeiro, C. C. (2016). *Optimization by GRASP*
+- **Fabricio Guidine**
+
+## Acknowledgments
+
+- Federal University of Juiz de Fora (UFJF)
+- Professor Stênio Sã Rosário F. Soares
+- Google Test framework
