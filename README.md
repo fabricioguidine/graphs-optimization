@@ -297,13 +297,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Authors
 
-- **Fabricio Guidine** - Initial work
-
-## Acknowledgments
-
-- Based on the original specification from the graph algorithms course
-- Uses Google Test for unit testing framework
-- Inspired by classic graph algorithm textbooks
+- @fabricioguidne
 
 ## References
 
