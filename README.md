@@ -54,7 +54,18 @@ graphs-with-grasp/
 │   └── test_Algorithms.cpp
 ├── docs/                    # Documentation
 │   ├── requirements.pdf     # Project specification
-│   └── latex/               # LaTeX technical report
+│   ├── latex/               # LaTeX technical report
+│   └── examples/            # Reference code examples
+├── scripts/                 # Utility scripts
+│   ├── setup_data.py        # Data setup script
+│   └── README.md
+├── data/                    # Graph instances
+│   └── instances/
+├── CMakeLists.txt           # Build configuration (root - IDE compatible)
+├── .clang-format            # Code formatting configuration
+├── .clang-tidy              # Static analysis configuration
+├── .vscode/                 # VS Code configuration (optional)
+└── README.md               # This file
 │       ├── relatorio.tex    # Main LaTeX document
 │       ├── capa.tex         # Cover page
 │       ├── referencias.bib  # Bibliography
