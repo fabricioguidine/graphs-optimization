@@ -66,9 +66,9 @@ graphs-with-grasp/
 ├── .clang-tidy              # Static analysis configuration
 ├── .vscode/                 # VS Code configuration (optional)
 └── README.md               # This file
-│       ├── relatorio.tex    # Main LaTeX document
-│       ├── capa.tex         # Cover page
-│       ├── referencias.bib  # Bibliography
+│       ├── report.tex       # Main LaTeX document
+│       ├── cover.tex        # Cover page
+│       ├── references.bib   # Bibliography
 │       └── README.md        # Compilation instructions
 ├── CMakeLists.txt           # Build configuration
 └── README.md               # This file
@@ -86,19 +86,19 @@ The complete project requirements are available in:
 
 A comprehensive technical report in LaTeX (following UFJF standards) is located in `docs/latex/`:
 
-* **Main document**: `docs/latex/relatorio.tex`
-* **Cover page**: `docs/latex/capa.tex`
-* **Bibliography**: `docs/latex/referencias.bib`
+* **Main document**: `docs/latex/report.tex`
+* **Cover page**: `docs/latex/cover.tex`
+* **Bibliography**: `docs/latex/references.bib`
 * **Compilation instructions**: `docs/latex/README.md`
 
 **To compile the PDF report:**
 
 ```bash
 cd docs/latex
-pdflatex relatorio.tex
-bibtex relatorio
-pdflatex relatorio.tex
-pdflatex relatorio.tex
+pdflatex report.tex
+bibtex report
+pdflatex report.tex
+pdflatex report.tex
 ```
 
 **Recommended:** Use [Overleaf](https://www.overleaf.com/) (online LaTeX editor - no installation needed)
