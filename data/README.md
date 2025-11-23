@@ -19,10 +19,10 @@ Graph instances can be used for testing and benchmarking algorithms:
 
 ```bash
 # Example: Run algorithm on unweighted graph
-./graph_algorithms data/instances/unweighted/grafo_1000_1.txt output.txt 0 0 0
+./graph_algorithms data/instances/unweighted/unweighted-graph-instances/grafo_1000_1.txt output.txt 0 0 0
 
 # Example: Run algorithm on weighted graph
-./graph_algorithms data/instances/weighted/grafo_1000.txt output.txt 0 1 0
+./graph_algorithms data/instances/weighted/weighted-graph-instances/grafo_1000.txt output.txt 0 1 0
 ```
 
 ## File Formats

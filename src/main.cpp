@@ -20,7 +20,7 @@
 using namespace GraphLib;
 
 int menu() {
-    int selecao;
+    int selection;
     std::cout << "\n=== GRAPH ALGORITHMS MENU ===" << std::endl;
     std::cout << "[1]  Graph Complement" << std::endl;
     std::cout << "[2]  Breadth-First Search (BFS)" << std::endl;
@@ -35,12 +35,12 @@ int menu() {
     std::cout << "[11] Floyd-Warshall All Pairs Shortest Path" << std::endl;
     std::cout << "[0]  Exit" << std::endl;
     std::cout << "Select option: ";
-    std::cin >> selecao;
-    return selecao;
+    std::cin >> selection;
+    return selection;
 }
 
-void executeAlgorithm(int selecao, Graph* graph, std::ofstream& output_file) {
-    switch(selecao) {
+void executeAlgorithm(int selection, Graph* graph, std::ofstream& output_file) {
+    switch(selection) {
         case 1: { // Complement
             Graph* complement = graph->getComplement();
             output_file << "Graph Complement:" << std::endl;
@@ -200,11 +200,11 @@ int main(int argc, char const *argv[]) {
         return 1;
     }
     
-    int selecao = 1;
-    while(selecao != 0) {
-        selecao = menu();
-        if(selecao != 0) {
-            executeAlgorithm(selecao, graph, output_file);
+    int selection = 1;
+    while(selection != 0) {
+        selection = menu();
+        if(selection != 0) {
+            executeAlgorithm(selection, graph, output_file);
             output_file << std::endl;
         }
     }

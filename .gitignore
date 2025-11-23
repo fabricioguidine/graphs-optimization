@@ -58,7 +58,9 @@ cmake-build-*/
 .cursor/
 .cursorrules
 .cursorignore
-.cursor/
+.cursorcache/
+*.cursor
+.cursor/**
 
 # CMake files
 CMakeCache.txt

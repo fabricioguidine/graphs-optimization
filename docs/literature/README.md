@@ -11,7 +11,7 @@ This directory contains academic papers and literature references related to gra
 
 ## References
 
-These papers were used as references during the development of the project and are cited in the technical report (`docs/latex/relatorio.tex`).
+These papers were used as references during the development of the project and are cited in the technical report (`docs/latex/report.tex`).
 
 ## Note
 

@@ -4,9 +4,9 @@ This directory contains the LaTeX source files for the technical report of the G
 
 ## Files
 
-- **relatorio.tex**: Main LaTeX document containing the complete technical report
-- **capa.tex**: Cover page template for UFJF
-- **referencias.bib**: Bibliography file with references used in the report
+- **report.tex**: Main LaTeX document containing the complete technical report
+- **cover.tex**: Cover page template for UFJF
+- **references.bib**: Bibliography file with references used in the report
 
 ## Compilation
 
@@ -14,18 +14,18 @@ This directory contains the LaTeX source files for the technical report of the G
 
 ```bash
 cd docs/latex
-pdflatex relatorio.tex
-bibtex relatorio
-pdflatex relatorio.tex
-pdflatex relatorio.tex
+pdflatex report.tex
+bibtex report
+pdflatex report.tex
+pdflatex report.tex
 ```
 
-The compiled PDF will be generated as `relatorio.pdf`.
+The compiled PDF will be generated as `report.pdf`.
 
 ### Using Overleaf (Online)
 
 1. Upload all files to [Overleaf](https://www.overleaf.com/)
-2. Set the main document to `relatorio.tex`
+2. Set the main document to `report.tex`
 3. Click "Recompile"
 
 ### Using Make (Optional)
@@ -33,13 +33,13 @@ The compiled PDF will be generated as `relatorio.pdf`.
 If you have `make` installed, you can create a `Makefile`:
 
 ```makefile
-all: relatorio.pdf
+all: report.pdf
 
-relatorio.pdf: relatorio.tex capa.tex referencias.bib
-	pdflatex relatorio.tex
-	bibtex relatorio
-	pdflatex relatorio.tex
-	pdflatex relatorio.tex
+report.pdf: report.tex cover.tex references.bib
+	pdflatex report.tex
+	bibtex report
+	pdflatex report.tex
+	pdflatex report.tex
 
 clean:
 	rm -f *.aux *.log *.bbl *.blg *.out *.toc *.lof *.lot
@@ -62,7 +62,7 @@ make
   - `algorithm`, `algpseudocode`
   - `listings`
   - `geometry`
-  - `babel` (Portuguese)
+  - `babel` (English)
 
 ## Structure
 
