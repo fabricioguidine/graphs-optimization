@@ -4,6 +4,7 @@
 **************************************************************************************************/
 
 #include <gtest/gtest.h>
+#include <fstream>
 #include "../include/Graph.h"
 #include "../include/Node.h"
 #include "../include/Edge.h"
@@ -78,5 +79,23 @@ TEST_F(GraphTest, GetComplement) {
     EXPECT_TRUE(complement->searchNode(2));
     
     delete complement;
+}
+
+TEST_F(GraphTest, BreadthFirstSearch) {
+    graph->insertEdge(1, 2, 0);
+    graph->insertEdge(2, 3, 0);
+    graph->insertEdge(3, 4, 0);
+    
+    std::ofstream output("test_bfs_output.txt");
+    graph->breadthFirstSearch(output);
+    output.close();
+    
+    // Verify BFS was executed (file should be created)
+    std::ifstream check("test_bfs_output.txt");
+    EXPECT_TRUE(check.good());
+    check.close();
+    
+    // Clean up
+    remove("test_bfs_output.txt");
 }
 

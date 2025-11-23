@@ -63,6 +63,13 @@ FetchContent_MakeAvailable(googletest)
 add_executable(graph_tests
     tests/test_Graph.cpp
     tests/test_Algorithms.cpp
+    tests/test_Dijkstra.cpp
+    tests/test_FloydWarshall.cpp
+    tests/test_Prim.cpp
+    tests/test_Kruskal.cpp
+    tests/test_TopologicalSort.cpp
+    tests/test_StronglyConnectedComponents.cpp
+    tests/test_GRASP.cpp
     ${CORE_SOURCES}
     ${ALGORITHM_SOURCES}
     ${UTIL_SOURCES}
