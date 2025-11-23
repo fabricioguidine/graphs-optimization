@@ -238,14 +238,3 @@ Contributions are welcome! Please follow these guidelines:
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Authors
-
-- **Fabricio Guidine**
-- **Walkíria Garcia**
-
-## 🙏 Acknowledgments
-
-- Federal University of Juiz de Fora (UFJF)
-- Professor Stênio Sã Rosário F. Soares
-- Google Test framework
