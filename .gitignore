@@ -54,13 +54,15 @@ cmake-build-*/
 *.nav
 *.snm
 
-# Cursor AI files
+# Cursor AI files (keep local only)
 .cursor/
 .cursorrules
 .cursorignore
 .cursorcache/
 *.cursor
 .cursor/**
+.cursorrules.*
+.cursorignore.*
 
 # Planning and context files (keep local only)
 NEXT_STEPS.md
