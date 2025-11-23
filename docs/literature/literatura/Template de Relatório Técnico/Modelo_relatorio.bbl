@@ -1,8 +1,0 @@
-\begin{thebibliography}{1}
-
-\bibitem{Adler89}
-I.~Adler, N.~K. Karmarkar, M.~G.~C. Resende, and G.~Veiga.
-\newblock An implementation of {Karmarkar's} algorithms for linear programming.
-\newblock {\em Mathematical Programming}, 44:297--335, 1989.
-
-\end{thebibliography}

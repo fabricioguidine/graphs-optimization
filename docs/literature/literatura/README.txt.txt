@@ -1,1 +1,0 @@
-A nossa versão está no Overleaf v2, esta é a disponibilizada pelo Stênio no AVA de Teoria dos Grafos.

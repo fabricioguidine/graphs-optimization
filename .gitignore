@@ -24,6 +24,36 @@ cmake-build-*/
 *~
 .clion/
 
+# IDE project files
+*.cbp
+*.layout
+*.depend
+*.workspace
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.bbl
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.out
+*.nav
+*.snm
+
 # Cursor AI files
 .cursor/
 .cursorrules
