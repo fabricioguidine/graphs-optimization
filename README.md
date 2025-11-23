@@ -3,18 +3,18 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![C++ Standard](https://img.shields.io/badge/C++-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
 
-## Description
+## 📋 Description
 
 A comprehensive C++ implementation of graph algorithms including fundamental graph operations, shortest path algorithms, minimum spanning tree algorithms, and metaheuristic optimization using GRASP (Greedy Randomized Adaptive Search Procedure).
 
-## Features
+## ✨ Features
 
-### Core Graph Operations
+### 🔷 Core Graph Operations
 - **Graph Data Structure**: Flexible implementation supporting directed/undirected and weighted/unweighted graphs
 - **Node and Edge Management**: Efficient insertion, removal, and traversal operations
 - **Graph Analysis**: Connectivity checks, circuit detection, complement generation
 
-### Graph Algorithms
+### 🔷 Graph Algorithms
 - **Breadth-First Search (BFS)**: Level-order traversal
 - **Depth-First Search (DFS)**: Path finding between nodes
 - **Dijkstra's Algorithm**: Single-source shortest paths
@@ -24,18 +24,18 @@ A comprehensive C++ implementation of graph algorithms including fundamental gra
 - **Strongly Connected Components**: Kosaraju's algorithm
 - **Topological Sort**: Kahn's algorithm for DAGs
 
-### Metaheuristics
+### 🔷 Metaheuristics
 - **GRASP**: Greedy Randomized Adaptive Search Procedure for optimization problems
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
+### 📦 Prerequisites
 
 - CMake 3.10 or higher
 - C++17 compatible compiler (GCC, Clang, or MSVC)
 - Git (for fetching Google Test)
 
-### Installation
+### 📥 Installation
 
 1. Clone the repository:
 ```bash
@@ -55,7 +55,7 @@ cmake ..
 cmake --build .
 ```
 
-### Data Setup
+### 📊 Data Setup
 
 Before running the algorithms, set up test data:
 
@@ -69,9 +69,9 @@ This will:
 - Check for existing graph instances
 - Generate sample test graphs if needed
 
-## Usage
+## 💻 Usage
 
-### Running the Application
+### ▶️ Running the Application
 
 ```bash
 ./graph_algorithms <input_file> <output_file> <directed> <weighted_edge> <weighted_node>
@@ -89,7 +89,7 @@ This will:
 ./graph_algorithms input.txt output.txt 0 1 0
 ```
 
-### Input File Format
+### 📝 Input File Format
 
 The input file should follow this format:
 
@@ -108,7 +108,7 @@ For weighted graphs, include edge weights:
 ...
 ```
 
-### Code Examples
+### 💡 Code Examples
 
 #### Example 1: Find Shortest Path
 ```cpp
@@ -145,7 +145,7 @@ Graph* dag = new Graph(5, true, false, false);
 std::vector<int> order = TopologicalSort::sort(dag);
 ```
 
-## Testing
+## 🧪 Testing
 
 The project includes comprehensive unit tests using Google Test framework:
 
@@ -157,7 +157,7 @@ The project includes comprehensive unit tests using Google Test framework:
 ./graph_tests --gtest_filter=GraphTest.*
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 graphs-with-grasp/
@@ -180,9 +180,9 @@ graphs-with-grasp/
 └── CMakeLists.txt           # Build configuration
 ```
 
-## Documentation
+## 📚 Documentation
 
-### Technical Report
+### 📄 Technical Report
 
 A comprehensive technical report in LaTeX (following UFJF standards) is located in `docs/latex/`:
 
@@ -202,11 +202,11 @@ pdflatex report.tex
 
 **Recommended:** Use [Overleaf](https://www.overleaf.com/) (online LaTeX editor - no installation needed)
 
-### Requirements
+### 📋 Requirements
 
 The complete project requirements are available in: [`docs/requirements.pdf`](docs/requirements.pdf)
 
-## Algorithm Complexity
+## ⚡ Algorithm Complexity
 
 | Algorithm | Time Complexity | Space Complexity |
 |-----------|----------------|------------------|
@@ -226,7 +226,7 @@ Where:
 - C = construction time
 - L = local search time
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please follow these guidelines:
 
@@ -235,15 +235,16 @@ Contributions are welcome! Please follow these guidelines:
 3. Update documentation as needed
 4. Follow the existing architecture
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Authors
+## 👥 Authors
 
 - **Fabricio Guidine**
+- **Walkíria Garcia**
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 - Federal University of Juiz de Fora (UFJF)
 - Professor Stênio Sã Rosário F. Soares
