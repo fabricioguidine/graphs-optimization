@@ -62,6 +62,13 @@ cmake-build-*/
 *.cursor
 .cursor/**
 
+# Planning and context files (keep local only)
+NEXT_STEPS.md
+docs/NEXT_STEPS.md
+*.plan.md
+*.context.md
+*.todo.md
+
 # CMake files
 CMakeCache.txt
 CMakeFiles/
