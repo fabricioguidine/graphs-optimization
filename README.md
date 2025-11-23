@@ -52,10 +52,52 @@ graphs-with-grasp/
 ├── tests/                   # Unit tests
 │   ├── test_Graph.cpp
 │   └── test_Algorithms.cpp
+├── docs/                    # Documentation
+│   ├── requirements.pdf     # Project specification
+│   └── latex/               # LaTeX technical report
+│       ├── relatorio.tex    # Main LaTeX document
+│       ├── capa.tex         # Cover page
+│       ├── referencias.bib  # Bibliography
+│       └── README.md        # Compilation instructions
 ├── CMakeLists.txt           # Build configuration
-├── requirements.pdf         # Project specification
 └── README.md               # This file
 ```
+
+## 📚 Documentation
+
+### Requirements
+
+The complete project requirements are available in:
+
+* **PDF**: `docs/requirements.pdf`
+
+### Technical Report
+
+A comprehensive technical report in LaTeX (following UFJF standards) is located in `docs/latex/`:
+
+* **Main document**: `docs/latex/relatorio.tex`
+* **Cover page**: `docs/latex/capa.tex`
+* **Bibliography**: `docs/latex/referencias.bib`
+* **Compilation instructions**: `docs/latex/README.md`
+
+**To compile the PDF report:**
+
+```bash
+cd docs/latex
+pdflatex relatorio.tex
+bibtex relatorio
+pdflatex relatorio.tex
+pdflatex relatorio.tex
+```
+
+**Recommended:** Use [Overleaf](https://www.overleaf.com/) (online LaTeX editor - no installation needed)
+
+The report includes:
+- Introduction and literature review
+- Methodology and implementation details
+- Algorithm descriptions with pseudocode
+- Complexity analysis
+- Results and conclusions
 
 ## Building the Project
 
