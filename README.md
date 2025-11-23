@@ -108,20 +108,49 @@ The report includes:
 
 ### Build Instructions
 
+#### Using CMake (Command Line)
+
 ```bash
 # Create build directory
 mkdir build
 cd build
 
-# Configure and build (CMakeLists.txt is in cmake/ directory)
+# Configure and build
 cmake ..
 cmake --build .
 
 # Run tests
 ctest
 # Or directly:
-./graph_tests
+./bin/graph_tests
 ```
+
+#### Using IDE
+
+**CLion:**
+1. Open the project folder in CLion
+2. CLion will automatically detect `CMakeLists.txt` at the root
+3. Build: `Build > Build Project` or `Ctrl+F9`
+4. Run: `Run > Run 'graph_algorithms'` or `Shift+F10`
+
+**Visual Studio Code:**
+1. Open the project folder
+2. Install extensions: C/C++, CMake Tools
+3. Press `Ctrl+Shift+P` and select "CMake: Configure"
+4. Build: `Ctrl+Shift+P` → "CMake: Build"
+5. Run: Use the debugger (F5) or run from terminal
+
+**Visual Studio (Windows):**
+1. Open Visual Studio
+2. File → Open → CMake → Select `CMakeLists.txt`
+3. Build: `Build > Build Solution` or `Ctrl+Shift+B`
+4. Run: `Debug > Start Debugging` or `F5`
+
+**Qt Creator:**
+1. File → Open File or Project → Select `CMakeLists.txt`
+2. Configure the project
+3. Build: `Build > Build Project` or `Ctrl+B`
+4. Run: `Build > Run` or `Ctrl+R`
 
 ### Data Setup
 
