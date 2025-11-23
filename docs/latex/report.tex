@@ -1,310 +1,167 @@
-\documentclass[12pt,a4paper]{article}
-
-% Packages
-\usepackage[utf8]{inputenc}
+\documentclass[12pt,fleqn]{article}
+\usepackage{amsfonts,amsthm,amsopn,amssymb,latexsym}
+\usepackage{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
-\usepackage{graphicx}
+\usepackage[intlimits]{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[linesnumbered,algoruled,boxed,lined]{algorithm2e}
 \usepackage{hyperref}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\usepackage{geometry}
-\usepackage{setspace}
-\usepackage{float}
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
 
-% Page setup
-\geometry{
-    a4paper,
-    left=3cm,
-    right=2cm,
-    top=3cm,
-    bottom=2cm
-}
+% Page dimensions
+\usepackage{a4}
+\setlength{\textwidth}{16.0cm}
+\setlength{\textheight}{9.0in}
+\renewcommand{\baselinestretch}{1.15}
+\addtolength{\topmargin}{-1cm}
+\setlength{\oddsidemargin}{-0.1cm}
 
-\onehalfspacing
-
-% Hyperref setup
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=cyan,
-    pdftitle={Graph Algorithms with GRASP - Technical Report},
-    pdfauthor={Fabricio Guidine}
-}
-
-% Algorithm setup
-\floatname{algorithm}{Algorithm}
-\renewcommand{\algorithmicrequire}{\textbf{Input:}}
-\renewcommand{\algorithmicensure}{\textbf{Output:}}
-
-% Code listing setup
-\lstset{
-    language=C++,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{green!60!black},
-    stringstyle=\color{red},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    stepnumber=1,
-    numbersep=5pt,
-    frame=single,
-    breaklines=true,
-    showstringspaces=false,
-    tabsize=2
-}
-
-% Title information
-\title{Graph Algorithms with GRASP\\
-       \large Implementation and Analysis of Fundamental Graph Algorithms}
-\author{Fabricio Guidine}
-\date{\today}
+\sloppy
 
 \begin{document}
+
+\pagestyle{empty}
 
 % Cover page
 \include{cover}
 
-% Table of contents
+\pagestyle{empty}
+
 \newpage
+
 \tableofcontents
 \newpage
 
-% List of figures
-\listoffigures
-\newpage
-
-% List of tables
-\listoftables
-\newpage
-
-% Main content
 \pagenumbering{arabic}
-\setcounter{page}{1}
 
-\section{Introdução}
+\setlength{\parindent}{0in}
+\parskip 5pt
 
-Este relatório apresenta a implementação e análise de algoritmos fundamentais de grafos, incluindo algoritmos de busca, caminhos mínimos, árvores geradoras mínimas e metaheurísticas. O trabalho foi desenvolvido como parte da disciplina de Teoria dos Grafos, utilizando a linguagem C++ e seguindo uma arquitetura modular e organizada.
+\section{Introduction}
 
-O projeto implementa uma biblioteca completa de algoritmos de grafos, incluindo:
+This technical report presents the implementation and experimental analysis of fundamental graph algorithms developed in C++17. The work was developed as part of the DCC059 - Graph Theory course at the Federal University of Juiz de Fora (UFJF).
 
-\begin{itemize}
-    \item Estruturas de dados fundamentais (grafo, nó, aresta)
-    \item Algoritmos de busca (BFS, DFS)
-    \item Algoritmos de caminhos mínimos (Dijkstra, Floyd-Warshall)
-    \item Algoritmos de árvores geradoras mínimas (Prim, Kruskal)
-    \item Componentes fortemente conexas (Kosaraju)
-    \item Ordenação topológica (Kahn)
-    \item Metaheurística GRASP (Greedy Randomized Adaptive Search Procedure)
-\end{itemize}
-
-\section{Revisão Bibliográfica}
-
-\subsection{Estruturas de Dados para Grafos}
-
-Grafos podem ser representados de diversas formas, sendo as mais comuns a lista de adjacências e a matriz de adjacências. A representação por lista de adjacências é mais eficiente em termos de espaço para grafos esparsos, enquanto a matriz de adjacências é preferível para grafos densos \cite{cormen2009}.
-
-\subsection{Algoritmos de Busca}
-
-Os algoritmos de busca em largura (BFS) e profundidade (DFS) são fundamentais para a exploração de grafos. O BFS utiliza uma fila para explorar os vértices nível por nível, enquanto o DFS utiliza uma pilha (ou recursão) para explorar o máximo possível antes de retroceder \cite{cormen2009}.
-
-\subsection{Algoritmos de Caminhos Mínimos}
-
-O algoritmo de Dijkstra encontra os caminhos mínimos de uma origem para todos os outros vértices em grafos com pesos não-negativos, com complexidade $O((V + E) \log V)$ usando heap de Fibonacci \cite{dijkstra1959}.
-
-O algoritmo de Floyd-Warshall resolve o problema de caminhos mínimos entre todos os pares de vértices, com complexidade $O(V^3)$ \cite{floyd1962}.
-
-\subsection{Árvores Geradoras Mínimas}
-
-Os algoritmos de Prim e Kruskal são utilizados para encontrar árvores geradoras mínimas em grafos não direcionados e conectados. Prim utiliza uma abordagem gulosa baseada em vértices, enquanto Kruskal utiliza uma abordagem baseada em arestas com estrutura de dados union-find \cite{cormen2009}.
-
-\subsection{Metaheurísticas}
-
-O GRASP (Greedy Randomized Adaptive Search Procedure) é uma metaheurística que combina construção gulosa randomizada com busca local. É amplamente utilizado para problemas de otimização combinatória \cite{resende2016}.
-
-\section{Metodologia}
-
-\subsection{Estrutura do Projeto}
-
-O projeto foi organizado em uma arquitetura modular:
+The project implements a complete library of graph algorithms, including:
 
 \begin{itemize}
-    \item \texttt{include/}: Arquivos de cabeçalho (.h)
-    \item \texttt{src/core/}: Implementações das estruturas de dados fundamentais
-    \item \texttt{src/algorithms/}: Implementações dos algoritmos
-    \item \texttt{src/utils/}: Utilitários e funções auxiliares
-    \item \texttt{tests/}: Testes unitários usando Google Test
+    \item Fundamental data structures (graph, node, edge)
+    \item Search algorithms (BFS, DFS)
+    \item Shortest path algorithms (Dijkstra, Floyd-Warshall)
+    \item Minimum spanning tree algorithms (Prim, Kruskal)
+    \item Strongly connected components (Kosaraju)
+    \item Topological sorting (Kahn)
+    \item GRASP metaheuristic (Greedy Randomized Adaptive Search Procedure)
 \end{itemize}
 
-\subsection{Implementação}
+\section{Implementation}
 
-Todas as implementações foram realizadas em C++17, utilizando:
+\subsection{Data Structures}
+
+The project uses an adjacency list representation, implemented through the classes:
+
+\subsubsection{Edge Class}
+
+The \texttt{Edge} class represents an edge in the graph, containing:
 \begin{itemize}
-    \item Estruturas de dados orientadas a objetos
-    \item Namespaces para organização do código
-    \item Templates e STL quando apropriado
-    \item Gerenciamento manual de memória com ponteiros
+    \item Target vertex ID
+    \item Edge weight
+    \item Pointer to the next edge
 \end{itemize}
 
-\subsection{Testes}
+\subsubsection{Node Class}
 
-Os testes foram implementados utilizando o framework Google Test, cobrindo:
+The \texttt{Node} class represents a vertex in the graph, containing:
 \begin{itemize}
-    \item Operações básicas de grafos
-    \item Correção dos algoritmos
-    \item Casos extremos e limites
+    \item Vertex ID
+    \item List of adjacent edges
+    \item In-degree and out-degree
+    \item Vertex weight (if applicable)
 \end{itemize}
 
-\section{Implementação}
+\subsubsection{Graph Class}
 
-\subsection{Estruturas de Dados}
-
-\subsubsection{Classe Edge}
-
-A classe \texttt{Edge} representa uma aresta do grafo, contendo:
+The \texttt{Graph} class is the main structure, supporting:
 \begin{itemize}
-    \item ID do vértice destino
-    \item Peso da aresta
-    \item Ponteiro para a próxima aresta
+    \item Directed and undirected graphs
+    \item Weighted and unweighted graphs
+    \item Vertex and edge insertion and removal operations
+    \item Connectivity and circuit analysis
 \end{itemize}
 
-\subsubsection{Classe Node}
+\subsection{Implemented Algorithms}
 
-A classe \texttt{Node} representa um vértice do grafo, contendo:
-\begin{itemize}
-    \item ID do vértice
-    \item Lista de arestas adjacentes
-    \item Grau de entrada e saída
-    \item Peso do vértice (se aplicável)
-\end{itemize}
+\subsubsection{Breadth-First Search (BFS)}
 
-\subsubsection{Classe Graph}
+The BFS algorithm was implemented using a queue (\texttt{std::queue}) to ensure level-by-level exploration.
 
-A classe \texttt{Graph} é a estrutura principal, suportando:
-\begin{itemize}
-    \item Grafos direcionados e não direcionados
-    \item Grafos ponderados e não ponderados
-    \item Operações de inserção e remoção de vértices e arestas
-    \item Análise de conectividade e circuitos
-\end{itemize}
+\subsubsection{Depth-First Search (DFS)}
 
-\subsection{Algoritmos Implementados}
+The DFS algorithm uses a stack (or recursion) to explore as far as possible before backtracking.
 
-\subsubsection{Busca em Largura (BFS)}
+\subsubsection{Dijkstra's Algorithm}
 
-O algoritmo BFS foi implementado utilizando uma fila (\texttt{std::queue}) para garantir a exploração nível por nível.
+Implemented using a priority queue (\texttt{std::priority\_queue}) for efficiency. Finds shortest paths from a source vertex to all other vertices in graphs with non-negative weights.
 
-\begin{algorithm}[H]
-\caption{Busca em Largura}
-\begin{algorithmic}[1]
-\Require Grafo $G$, vértice inicial $s$
-\Ensure Ordem de visita dos vértices
-\State Criar fila $Q$
-\State Marcar $s$ como visitado
-\State $Q$.enqueue($s$)
-\While{$Q$ não está vazia}
-    \State $v \gets Q$.dequeue()
-    \State Processar $v$
-    \For{cada vértice $u$ adjacente a $v$}
-        \If{$u$ não foi visitado}
-            \State Marcar $u$ como visitado
-            \State $Q$.enqueue($u$)
-        \EndIf
-    \EndFor
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
+\subsubsection{Floyd-Warshall Algorithm}
 
-\subsubsection{Algoritmo de Dijkstra}
+Implemented with three nested loops to calculate all distances between pairs of vertices.
 
-Implementado utilizando uma fila de prioridade (\texttt{std::priority\_queue}) para eficiência.
+\subsubsection{Prim's Algorithm}
 
-\begin{algorithm}[H]
-\caption{Algoritmo de Dijkstra}
-\begin{algorithmic}[1]
-\Require Grafo ponderado $G$, vértice origem $s$
-\Ensure Distâncias mínimas de $s$ para todos os vértices
-\State Inicializar distâncias $d[v] \gets \infty$ para todo $v$
-\State $d[s] \gets 0$
-\State Criar fila de prioridade $Q$ com $(0, s)$
-\While{$Q$ não está vazia}
-    \State $(d_u, u) \gets Q$.extractMin()
-    \If{$u$ já foi processado} \textbf{continue} \EndIf
-    \State Marcar $u$ como processado
-    \For{cada aresta $(u, v)$ com peso $w$}
-        \If{$d[u] + w < d[v]$}
-            \State $d[v] \gets d[u] + w$
-            \State $Q$.insert($(d[v], v)$)
-        \EndIf
-    \EndFor
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
+Uses a priority queue to iteratively select the edge of minimum weight that connects a vertex in the MST to a vertex outside it.
 
-\subsubsection{Algoritmo de Floyd-Warshall}
+\subsubsection{Kruskal's Algorithm}
 
-Implementado com três loops aninhados para calcular todas as distâncias entre pares.
+Uses the union-find data structure to verify if adding an edge creates a cycle.
 
-\subsubsection{Algoritmo de Prim}
+\subsubsection{Strongly Connected Components (Kosaraju)}
 
-Utiliza uma fila de prioridade para selecionar iterativamente a aresta de menor peso que conecta um vértice na MST a um vértice fora dela.
-
-\subsubsection{Algoritmo de Kruskal}
-
-Utiliza a estrutura de dados union-find para verificar se a adição de uma aresta cria um ciclo.
-
-\subsubsection{Componentes Fortemente Conexas (Kosaraju)}
-
-Implementa o algoritmo de Kosaraju em duas fases:
+Implements Kosaraju's algorithm in two phases:
 \begin{enumerate}
-    \item Primeira DFS no grafo original para determinar ordem de término
-    \item Segunda DFS no grafo transposto na ordem inversa
+    \item First DFS on the original graph to determine finish order
+    \item Second DFS on the transposed graph in reverse order
 \end{enumerate}
 
-\subsubsection{Ordenação Topológica (Kahn)}
+\subsubsection{Topological Sorting (Kahn)}
 
-Utiliza o algoritmo de Kahn baseado em graus de entrada.
+Uses Kahn's algorithm based on vertex in-degrees.
 
 \subsubsection{GRASP}
 
-Implementa a metaheurística GRASP com:
+Implements the GRASP metaheuristic with:
 \begin{itemize}
-    \item Construção gulosa randomizada com lista de candidatos restrita (RCL)
-    \item Busca local para melhorar soluções
-    \item Múltiplas iterações para encontrar melhor solução
+    \item Greedy randomized construction with restricted candidate list (RCL)
+    \item Local search to improve solutions
+    \item Multiple iterations to find the best solution
 \end{itemize}
 
-\section{Resultados}
+\section{Results}
 
-\subsection{Testes Unitários}
+\subsection{Unit Tests}
 
-Todos os testes unitários foram executados com sucesso, validando:
+All unit tests were executed successfully, validating:
 \begin{itemize}
-    \item Operações básicas de inserção e remoção
-    \item Correção dos algoritmos de busca
-    \item Correção dos algoritmos de caminhos mínimos
-    \item Correção dos algoritmos de MST
-    \item Detecção de componentes fortemente conexas
-    \item Ordenação topológica
+    \item Basic insertion and removal operations
+    \item Correctness of search algorithms
+    \item Correctness of shortest path algorithms
+    \item Correctness of MST algorithms
+    \item Detection of strongly connected components
+    \item Topological sorting
 \end{itemize}
 
-\subsection{Análise de Complexidade}
+\subsection{Complexity Analysis}
 
-A Tabela~\ref{tab:complexity} apresenta a complexidade temporal e espacial dos algoritmos implementados.
+Table~\ref{tab:complexity} presents the temporal and spatial complexity of the implemented algorithms.
 
 \begin{table}[H]
 \centering
-\caption{Complexidade dos Algoritmos}
+\caption{Algorithm Complexity}
 \label{tab:complexity}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Algoritmo} & \textbf{Tempo} & \textbf{Espaço} \\
+\textbf{Algorithm} & \textbf{Time} & \textbf{Space} \\
 \hline
 BFS/DFS & $O(V + E)$ & $O(V)$ \\
 Dijkstra & $O((V + E) \log V)$ & $O(V)$ \\
@@ -313,48 +170,33 @@ Prim & $O((V + E) \log V)$ & $O(V)$ \\
 Kruskal & $O(E \log E)$ & $O(V)$ \\
 Topological Sort & $O(V + E)$ & $O(V)$ \\
 SCC (Kosaraju) & $O(V + E)$ & $O(V)$ \\
+GRASP & $O(I \times (V + E))$ & $O(V)$ \\
 \hline
 \end{tabular}
 \end{table}
 
-\section{Conclusão}
+Where $V$ is the number of vertices, $E$ is the number of edges, and $I$ is the number of GRASP iterations.
 
-Este trabalho apresentou uma implementação completa e organizada de algoritmos fundamentais de grafos em C++. A arquitetura modular permite fácil manutenção e extensão, enquanto os testes unitários garantem a correção das implementações.
+\subsection{Experimental Results}
 
-Os algoritmos implementados cobrem as principais classes de problemas em grafos: busca, caminhos mínimos, árvores geradoras mínimas, análise de conectividade e otimização combinatória através de metaheurísticas.
+The algorithms were executed on a set of test instances. The results table should be updated after running the algorithms with actual execution times and solution quality metrics.
 
-Futuras melhorias podem incluir:
+\section{Conclusions}
+
+This work presented a complete and organized implementation of fundamental graph algorithms in C++17. The modular architecture allows for easy maintenance and extension, while unit tests ensure the correctness of implementations.
+
+The implemented algorithms cover the main classes of graph problems: search, shortest paths, minimum spanning trees, connectivity analysis, and combinatorial optimization through metaheuristics.
+
+Future improvements may include:
 \begin{itemize}
-    \item Otimizações adicionais para grafos muito grandes
-    \item Implementação de mais metaheurísticas
-    \item Análise experimental com instâncias reais
-    \item Visualização gráfica dos resultados
+    \item Additional optimizations for very large graphs
+    \item Implementation of more metaheuristics
+    \item Experimental analysis with real instances
+    \item Graphical visualization of results
 \end{itemize}
 
-\section{Referências}
-
-\begin{thebibliography}{99}
-
-\bibitem{cormen2009}
-Cormen, T. H., Leiserson, C. E., Rivest, R. L., \& Stein, C. (2009). 
-\textit{Introduction to Algorithms} (3rd ed.). MIT Press.
-
-\bibitem{dijkstra1959}
-Dijkstra, E. W. (1959). 
-A note on two problems in connexion with graphs. 
-\textit{Numerische Mathematik}, 1(1), 269-271.
-
-\bibitem{floyd1962}
-Floyd, R. W. (1962). 
-Algorithm 97: Shortest path. 
-\textit{Communications of the ACM}, 5(6), 345.
-
-\bibitem{resende2016}
-Resende, M. G., \& Ribeiro, C. C. (2016). 
-\textit{Optimization by GRASP: Greedy Randomized Adaptive Search Procedures}. 
-Springer.
-
-\end{thebibliography}
+% References
+\bibliographystyle{plain}
+\bibliography{references}
 
 \end{document}
-

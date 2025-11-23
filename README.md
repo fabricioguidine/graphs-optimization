@@ -103,10 +103,15 @@ pdflatex report.tex
 
 **Recommended:** Use [Overleaf](https://www.overleaf.com/) (online LaTeX editor - no installation needed)
 
+**Report:**
+- **LaTeX Source**: [`docs/latex/report.tex`](docs/latex/report.tex)
+- **Cover Page**: [`docs/latex/cover.tex`](docs/latex/cover.tex)
+- **Bibliography**: [`docs/latex/references.bib`](docs/latex/references.bib)
+
 The report includes:
-- Introduction and literature review
-- Methodology and implementation details
-- Algorithm descriptions with pseudocode
+- Introduction
+- Implementation details
+- Algorithm descriptions
 - Complexity analysis
 - Results and conclusions
 
