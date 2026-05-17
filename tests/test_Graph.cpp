@@ -54,11 +54,13 @@ TEST_F(GraphTest, DepthFirstSearch) {
 }
 
 TEST_F(GraphTest, ConnectedGraph) {
+    // Graph is created with order=5 in SetUp, so we must connect all 5 nodes.
     graph->insertEdge(1, 2, 0);
     graph->insertEdge(2, 3, 0);
     graph->insertEdge(3, 4, 0);
-    graph->insertEdge(4, 1, 0);
-    
+    graph->insertEdge(4, 5, 0);
+    graph->insertEdge(5, 1, 0);
+
     EXPECT_TRUE(graph->connectedGraph());
 }
 
