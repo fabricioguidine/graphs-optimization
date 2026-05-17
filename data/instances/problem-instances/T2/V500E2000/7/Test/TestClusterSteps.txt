@@ -1,10 +1,3 @@
-0 1883
-0 1824
-0 1797
-0 1797
-0 1792
-0 1791
-0 1768
-0 1768
-0 1768
-0 1768
+version https://git-lfs.github.com/spec/v1
+oid sha256:15a98101df7187f1865231b1605cd5fc20f834cfb0a786c4a0b652aaccea5876
+size 80

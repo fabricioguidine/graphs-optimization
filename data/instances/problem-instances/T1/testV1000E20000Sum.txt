@@ -1,12 +1,3 @@
-1854
-1939
-1841
-1974
-1878
-1964
-1966
-1853
-1941
-1971
-Average
-1918.1
+version https://git-lfs.github.com/spec/v1
+oid sha256:f32575a084c63e0dd8110a1e176271878c2dd527e8958f6d31e4faf8022faa30
+size 77
