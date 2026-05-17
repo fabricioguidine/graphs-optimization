@@ -1,7 +1,7 @@
 # Graph Algorithms with GRASP
 
-[![CI](https://github.com/fabricioguidine/graphs-optimization/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fabricioguidine/graphs-optimization/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/fabricioguidine/graphs-optimization/branch/main/graph/badge.svg)](https://codecov.io/gh/fabricioguidine/graphs-optimization)
+[![CI](https://github.com/fabricioguidine/graphs-optimization/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fabricioguidine/graphs-optimization/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/fabricioguidine/graphs-optimization/branch/master/graph/badge.svg)](https://codecov.io/gh/fabricioguidine/graphs-optimization)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![C++ Standard](https://img.shields.io/badge/C++-17%2F20-blue.svg)](https://en.cppreference.com/w/cpp/17)
 [![CMake](https://img.shields.io/badge/CMake-3.14%2B-064F8C.svg)](https://cmake.org/)
