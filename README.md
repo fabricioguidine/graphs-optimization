@@ -1,7 +1,10 @@
 # Graph Algorithms with GRASP
 
+[![CI](https://github.com/fabricioguidine/graphs-optimization/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fabricioguidine/graphs-optimization/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/fabricioguidine/graphs-optimization/branch/main/graph/badge.svg)](https://codecov.io/gh/fabricioguidine/graphs-optimization)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![C++ Standard](https://img.shields.io/badge/C++-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
+[![C++ Standard](https://img.shields.io/badge/C++-17%2F20-blue.svg)](https://en.cppreference.com/w/cpp/17)
+[![CMake](https://img.shields.io/badge/CMake-3.14%2B-064F8C.svg)](https://cmake.org/)
 
 ## 📋 Description
 
@@ -234,6 +237,61 @@ Contributions are welcome! Please follow these guidelines:
 2. Add unit tests for new features
 3. Update documentation as needed
 4. Follow the existing architecture
+
+## Development
+
+### Build, test, coverage and benchmarks
+
+```bash
+# Configure (Debug + tests, default)
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --parallel
+
+# Run all tests via CTest
+ctest --test-dir build --output-on-failure
+
+# Coverage (Linux/macOS with gcov + gcovr installed)
+cmake -S . -B build-cov -DGRAPHS_ENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build-cov --parallel
+ctest --test-dir build-cov --output-on-failure
+gcovr -r . --exclude 'build-cov/_deps/.*' --exclude 'tests/.*' --html -o coverage.html
+
+# Sanitizers
+cmake -S . -B build-san -DGRAPHS_ENABLE_ASAN=ON -DGRAPHS_ENABLE_UBSAN=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build-san --parallel
+ctest --test-dir build-san --output-on-failure
+
+# Benchmarks (Google Benchmark)
+cmake -S . -B build-bench -DGRAPHS_BUILD_BENCHMARKS=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build build-bench --target graph_benchmarks --parallel
+./build-bench/bin/graph_benchmarks
+```
+
+### CMake options
+
+| Option | Default | Description |
+|---|---|---|
+| `GRAPHS_BUILD_TESTS` | `ON` | Build GoogleTest unit + invariant tests |
+| `GRAPHS_BUILD_BENCHMARKS` | `OFF` | Build Google Benchmark micro-benchmarks |
+| `GRAPHS_ENABLE_COVERAGE` | `OFF` | Compile with gcov instrumentation |
+| `GRAPHS_ENABLE_ASAN` | `OFF` | AddressSanitizer |
+| `GRAPHS_ENABLE_UBSAN` | `OFF` | UndefinedBehaviorSanitizer |
+| `GRAPHS_ENABLE_TSAN` | `OFF` | ThreadSanitizer |
+| `GRAPHS_WARNINGS_AS_ERRORS` | `OFF` | Pass `-Werror` / `/WX` |
+
+### Code style
+
+`.clang-format` and `.clang-tidy` configure the style and static checks. CI runs
+`clang-format --dry-run --Werror` and `clang-tidy` on every PR.
+
+### Data instances
+
+The `data/instances/` directory ships ~484 MB of benchmark graphs across 4700+
+files. Going forward, please **do not commit new instances**: migrate large
+inputs to [Git LFS](https://git-lfs.com/) or attach them to a GitHub Release and
+load them on demand via `scripts/setup_data.py`. The `.gitignore` rules ignore
+new `.dat` / `.txt` instance files by default; remove that block locally if you
+have a legitimate reason to add small fixtures.
 
 ## 📜 License
 
