@@ -1,11 +1,3 @@
-VisulisationInfo
-Number Of Nodes:500   Number Of Edges:499
-Name:0   Corection:False   MinMax:Basic   Rank:False
-3941
-683
-correction Average: 0
-correction Standard deviation: NaN
-correction Best: 1.79769313486232E+308  Index:-1  Iteration:-1
-nocorrection Average: 3941
-nocorrection Best: 3941  Index:0  Iteration:683
-nocorrection Standard deviation: 0
+version https://git-lfs.github.com/spec/v1
+oid sha256:ad62e28774c8bc9338bbac7331d1e5618141c2bf011f067729733291670d82bc
+size 362

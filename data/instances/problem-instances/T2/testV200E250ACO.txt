@@ -1,12 +1,3 @@
-337
-283
-293
-291
-282
-276
-283
-301
-285
-301
-Average
-293.2
+version https://git-lfs.github.com/spec/v1
+oid sha256:1891dee3aae6c6433d3907ba045b4df5aae58b3c17642aadf1b9ce33b53ea163
+size 66
