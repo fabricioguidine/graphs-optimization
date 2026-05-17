@@ -1,0 +1,167 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }} / ${{ matrix.compiler }} / C++${{ matrix.cxx_standard }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        cxx_standard: [17, 20]
+        compiler: [default]
+        include:
+          - os: ubuntu-latest
+            compiler: gcc
+            cxx_standard: 17
+          - os: ubuntu-latest
+            compiler: clang
+            cxx_standard: 17
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Set up CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Cache FetchContent deps
+        uses: actions/cache@v4
+        with:
+          path: |
+            build/_deps
+          key: ${{ runner.os }}-${{ matrix.compiler }}-cxx${{ matrix.cxx_standard }}-deps-${{ hashFiles('CMakeLists.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.compiler }}-cxx${{ matrix.cxx_standard }}-deps-
+
+      - name: Select compiler (Linux)
+        if: runner.os == 'Linux' && matrix.compiler != 'default'
+        run: |
+          if [ "${{ matrix.compiler }}" = "clang" ]; then
+            echo "CC=clang"  >> $GITHUB_ENV
+            echo "CXX=clang++" >> $GITHUB_ENV
+          else
+            echo "CC=gcc"  >> $GITHUB_ENV
+            echo "CXX=g++" >> $GITHUB_ENV
+          fi
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_STANDARD=${{ matrix.cxx_standard }} -DGRAPHS_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Debug --parallel
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --build-config Debug
+
+  coverage:
+    name: Coverage (gcov + codecov)
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov gcovr cmake build-essential
+
+      - name: Cache FetchContent deps
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: coverage-deps-${{ hashFiles('CMakeLists.txt') }}
+
+      - name: Configure with coverage
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DGRAPHS_ENABLE_COVERAGE=ON -DGRAPHS_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Run tests
+        working-directory: build
+        run: ctest --output-on-failure
+
+      - name: Collect coverage
+        run: |
+          gcovr -r . --exclude 'build/_deps/.*' --exclude 'tests/.*' \
+                --xml --output coverage.xml
+          gcovr -r . --exclude 'build/_deps/.*' --exclude 'tests/.*' \
+                --html --html-details -o coverage.html || true
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage.xml
+            coverage.html
+
+  lint:
+    name: Lint (clang-format + clang-tidy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format clang-tidy cmake build-essential
+
+      - name: Run clang-format check
+        run: |
+          shopt -s globstar nullglob
+          files=(include/**/*.h src/**/*.cpp tests/**/*.cpp)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No files to check."
+            exit 0
+          fi
+          clang-format --dry-run --Werror "${files[@]}"
+
+      - name: Configure for clang-tidy
+        run: cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DGRAPHS_BUILD_TESTS=OFF
+
+      - name: Run clang-tidy
+        run: |
+          shopt -s globstar nullglob
+          files=(src/**/*.cpp)
+          clang-tidy -p build "${files[@]}" || true
+
+  sanitizers:
+    name: Sanitizers (ASan + UBSan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure with sanitizers
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DGRAPHS_ENABLE_ASAN=ON -DGRAPHS_ENABLE_UBSAN=ON -DGRAPHS_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Run tests under sanitizers
+        working-directory: build
+        env:
+          ASAN_OPTIONS: detect_leaks=1:strict_string_checks=1:halt_on_error=1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: ctest --output-on-failure
