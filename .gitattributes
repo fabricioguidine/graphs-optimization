@@ -1,1 +1,30 @@
+# Normalize line endings: store text as LF in the repo, check out native on
+# Windows is left to core.autocrlf; LF is enforced in the working tree for
+# tooling consistency (matches .editorconfig).
+* text=auto eol=lf
+
+# Source and config files are text.
+*.cpp    text eol=lf
+*.h      text eol=lf
+*.hpp    text eol=lf
+*.cmake  text eol=lf
+*.txt    text eol=lf
+*.md     text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.json   text eol=lf
+*.py     text eol=lf
+CMakeLists.txt text eol=lf
+
+# Binary assets: never apply EOL conversion or text diffs.
+*.pdf    binary
+*.zip    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.dat    binary
+
+# Large graph instances are tracked with Git LFS.
 data/instances/** filter=lfs diff=lfs merge=lfs -text

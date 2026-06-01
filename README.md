@@ -58,6 +58,35 @@ cmake ..
 cmake --build .
 ```
 
+### 🌐 Cross-platform builds
+
+The project builds with CMake (C++17) on **Linux, macOS, and Windows**. Google
+Test is fetched automatically via CMake `FetchContent`, so no system-wide
+install is required.
+
+**Linux / macOS (GCC or Clang):**
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
+
+Select a specific compiler with `-DCMAKE_CXX_COMPILER=g++` or `clang++`.
+
+**Windows (MSVC, multi-config generator):**
+```powershell
+cmake -S . -B build
+cmake --build build --config Release
+ctest --test-dir build -C Release --output-on-failure
+```
+
+The same commands run for all three platforms in CI (see
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml)). GCC/Clang-only warning
+flags are guarded behind `if(MSVC)` in `CMakeLists.txt`, and all file and path
+handling uses portable `<fstream>` / `std::filesystem`, so no source changes are
+needed per platform. See [ARCHITECTURE.md](ARCHITECTURE.md) for the full module
+layout, input format, and test strategy.
+
 ### 📊 Data Setup
 
 Before running the algorithms, set up test data:
