@@ -1,3 +1,0 @@
-# Python requirements for data setup script
-# No external dependencies required - uses only standard library
-
