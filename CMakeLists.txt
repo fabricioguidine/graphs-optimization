@@ -125,6 +125,7 @@ if(GRAPHS_BUILD_TESTS)
         tests/test_StronglyConnectedComponents.cpp
         tests/test_GRASP.cpp
         tests/test_Invariants.cpp
+        tests/test_EndToEnd.cpp
     )
     target_link_libraries(graph_tests
         PRIVATE
